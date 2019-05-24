@@ -6,5 +6,20 @@ Feel free to use this template to implement your own variation on the client val
 For my usecase i had issues using interfaces as models to separate the layout from default behaviour. 
 
 ```
-TODO
+CustomFluentValidationModelValidatorProvider.Configure(provider =>
+{
+  ...
+  
+	provider.CreateValidatorTypeInterceptor = (validatorType, isProperty, metadata, context) =>
+	{
+		if (isProperty && validatorType.IsInterface)
+		{
+			validatorType = metadata.Container.GetType();
+		}
+
+		return validatorType;
+	};
+  
+  ...
+});
 ```
